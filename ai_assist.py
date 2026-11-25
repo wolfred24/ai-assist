@@ -3,6 +3,9 @@
 
 Motor: Ollama (http://127.0.0.1:11434). Interfaz: GTK3 + AyatanaAppIndicator.
 El dictado delega en `voiceio`, que ya está instalado y configurado en español.
+
+Licencia: PolyForm Noncommercial 1.0.0 (ver LICENSE). Uso comercial requiere
+permiso escrito del autor.
 """
 
 import html

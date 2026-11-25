@@ -1,7 +1,35 @@
 # Asistente IA local para GNOME
 
+[![Licencia: PolyForm Noncommercial](https://img.shields.io/badge/licencia-PolyForm%20Noncommercial-blue)](LICENSE)
+
 Consulta rápida a tu propia IA (Ollama + `qwen3.5:9b`) sin abrir el navegador:
 icono en la bandeja del sistema, atajo global y dictado por voz con `voiceio`.
+
+## Instalación
+
+```bash
+git clone https://github.com/wolfred24/ai-assist.git
+cd ai-assist
+./install.sh
+```
+
+Dependencias del sistema (Debian/Ubuntu con GNOME):
+
+```bash
+sudo apt install python3-gi gir1.2-ayatanaappindicator3-0.1 \
+                 gnome-shell-extension-appindicator speech-dispatcher-utils \
+                 libnotify-bin
+```
+
+Además necesitas:
+
+- **Ollama** en `127.0.0.1:11434` ([ollama.com](https://ollama.com)) y un modelo:
+  `ollama pull qwen3.5:9b`.
+- **voiceio** solo para el dictado; sin él, el resto de la app funciona igual.
+- **AppIndicator** activo: `gnome-extensions enable appindicator@rgcjonas.gmail.com`.
+
+`install.sh` crea el lanzador, el autostart, el atajo `Ctrl+Alt+A` y el comando
+`ai-assist`. No necesita `sudo`.
 
 ## Qué hace
 
@@ -16,8 +44,8 @@ icono en la bandeja del sistema, atajo global y dictado por voz con `voiceio`.
 - **Markdown formateado**: títulos, listas, negritas, código, tablas y citas se
   muestran con estilo, no como símbolos crudos.
 - **Contexto real del equipo**: antes de responder, el asistente recibe datos
-  verificados de esta máquina (Debian 13, GNOME 48/Wayland, CPU, GPU, RAM,
-  Nautilus, atajos de GNOME). Así responde para *tu* sistema y no con
+  verificados de la máquina donde corre (SO, escritorio, CPU, GPU, RAM, gestor
+  de archivos y atajos del escritorio). Así responde para *tu* sistema y no con
   generalidades de Windows/macOS.
 - Historial en `~/.local/share/ai-assist/history.jsonl`.
 
@@ -94,7 +122,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 ## Modelos
 
-Con 16 GB de VRAM caben enteros modelos de hasta ~14B en Q4. Sugerencias:
+Como referencia, con 16 GB de VRAM caben enteros modelos de hasta ~14B en Q4.
+Sugerencias:
 
 ```bash
 ollama pull qwen3.5:9b          # el actual: rápido y equilibrado
@@ -104,23 +133,31 @@ ollama pull qwen2.5-coder:14b   # para código
 
 Después de descargar, bandeja → *Recargar modelos*.
 
-## Requisitos (ya instalados en este equipo)
+## Requisitos
 
 | Pieza | Comprobación |
 |---|---|
 | Ollama activo | `systemctl status ollama` |
 | Python 3 + PyGObject | `/usr/bin/python3 -c "import gi"` |
 | AppIndicator | `gnome-extensions list \| grep appindicator` |
-| Dictado | `voiceio doctor` |
-| TTS | `spd-say "prueba"` |
+| Dictado (opcional) | `voiceio doctor` |
+| TTS (opcional) | `spd-say "prueba"` |
 
 La bandeja en GNOME depende de la extensión *AppIndicator and KStatusNotifierItem
 Support*; sin ella el icono no aparece (el atajo sigue funcionando).
 
+Probado en Debian 13 con GNOME Shell 48 sobre Wayland y una RX 6950 XT.
+
 ## Integración con OpenCode
 
-OpenCode ya usa el mismo Ollama. Lo que consultes aquí y lo que uses en OpenCode
-comparten modelo y GPU; no hay que configurar nada más.
+OpenCode puede usar el mismo Ollama (y lo hace si lo configuras como proveedor).
+Lo que consultes aquí y lo que uses en OpenCode comparten modelo y GPU.
+
+## Licencia
+
+[PolyForm Noncommercial 1.0.0](LICENSE): puedes usar, modificar y compartir este
+proyecto para fines **no comerciales**. Cualquier uso comercial requiere permiso
+escrito del autor. No es una licencia de código abierto según la OSI.
 
 ## Desinstalar
 

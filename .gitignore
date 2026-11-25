@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Registros y datos locales
+*.log
+*.jsonl
+*.md.bak
+
+# Editores
+.vscode/
+.idea/
+*.swp
